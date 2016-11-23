@@ -102,7 +102,7 @@ module Reif = struct
       
   (** [tac] is the final tactic. *)
   let tac : unit Proofview.tactic =
-      Proofview.Goal.enter (fun gl ->
+      Proofview.Goal.enter { Proofview.Goal.enter = fun gl ->
       (** We get the conclusion of the as a goal, which is a constr.
           (see [proofs/proofview.mli].)  *)
       let concl = Proofview.Goal.raw_concl gl in
@@ -163,7 +163,7 @@ module Reif = struct
 	      (see lib/pp.mli for more functions)
 	  *)
 	  Tacticals.New.tclFAIL 1
-	    (Pp.str "The goal does not look like an equation"))
+	    (Pp.str "The goal does not look like an equation") }
 end
   
 (** The final magic part is to register our custom tactic in
